@@ -1,9 +1,9 @@
 {
   "extends": "airbnb-base",
   "env": {
-     "es6": true,
-     "browser": true,
-     "jest": true
+    "es6": true,
+    "browser": true,
+    "jest": true
   },
   "rules": {
     "no-plusplus": "off",
@@ -13,6 +13,7 @@
       "error",
       "LabeledStatement",
       "WithStatement"
-    ]
+    ],
+    "indent": ["error", 2]
   }
 }
