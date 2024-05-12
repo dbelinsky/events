@@ -1,5 +1,5 @@
 import Goblin from './Goblin';
-import CellRenderer from './CellRenderer';
+import CellRenderer from './CellRender';
 
 export default class GameLogic {
   constructor() {
