@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -11,7 +12,9 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    contentBase: path.resolve(__dirname, '/dist'),
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
     open: true,
     compress: true,
   },
@@ -34,9 +37,15 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader, 'css-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
       },
     ],
   },
@@ -49,6 +58,10 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
-    new webpack.HotModuleReplacementPlugin(),
+        new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/img', to: 'img' },
+      ],
+    }),
   ],
 };
