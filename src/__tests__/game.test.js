@@ -1,5 +1,5 @@
 import Goblin from '../js/Goblin';
-import CellRenderer from '../js/CellRenderer';
+import CellRenderer from '../js/CellRender';
 import GameLogic from '../js/GameLogic';
 
 jest.useFakeTimers();
