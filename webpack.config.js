@@ -1,10 +1,23 @@
 const path = require('path');
+const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  target: 'web',
+  devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+  },
+  devServer: {
+    historyApiFallback: true,
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    open: true,
+    compress: true,
   },
   module: {
     rules: [
@@ -25,12 +38,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader, 'css-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /\.(png|jpg|gif)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
     ],
@@ -43,6 +58,11 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
+    }),
+        new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/img', to: 'img' },
+      ],
     }),
   ],
 };
